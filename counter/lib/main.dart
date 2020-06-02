@@ -75,6 +75,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+  void _reset(){
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter = 0;
+    });
+  }
+
 
   void _incrementSubtracter() {
     setState(() {
@@ -92,9 +103,35 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _clear(){
-    setState((){
-      _counter = 0;
-    });
+    showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: new Text("Are you sure you want to reset your counter?"),
+          content: new Text("This action is not resettable. Press confirm to clear"),
+          actions: <Widget>[
+            new FlatButton(
+                onPressed: (){
+                  //_counter = 0;
+                  Navigator.of(context).pop();
+                },
+                child: new Text("Cancel"),
+            ),
+
+            new FlatButton(
+              onPressed: (){
+                _reset();
+                Navigator.of(context).pop();
+              },
+              child: new Text("Reset"),
+            ),
+          ],
+        );
+      }
+    );
+    //setState((){
+     // _counter = 0;
+    //});
   }
 
 
@@ -200,7 +237,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     ]
               ),
-          Spacer(flex: 4),
+          Spacer(flex: 3),
+        Text(
+            'Clear',
+            style: Theme.of(context).textTheme.headline6,
+
+
+        ),
+            Spacer(),
 
 
 
